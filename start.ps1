@@ -1,4 +1,4 @@
-$githuburl = 'https://github.com/begiilm/mailchm/raw/master/'
+$githuburl = 'https://github.com/begiilm/mailchm/raw/master'
 
 
 function Invoke-Mimikatz

